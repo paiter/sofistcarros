@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages xmlns="http://jboss.com/products/seam/pages" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.1.xsd"
+	no-conversation-view-id="/home.xhtml" login-view-id="/login.xhtml">
+
+	<!-- Mapeamentos para o Menu -->
+	<page view-id="*">
+		
+		<header name="Cache-Control" value="no-cache, no-store, max-age=0, must-revalidate" />
+		
+		<navigation>
+			<rule if-outcome="home">
+				<redirect view-id="/home.xhtml" />
+			</rule>
+
+			<!-- Tabelas Básicas -->
+
+			<rule if-outcome="exercicio">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/tabelas/ExercicioList.xhtml"/>
+			</rule>
+
+			<rule if-outcome="pais">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/tabelas/PaisList.xhtml"/>
+			</rule>
+
+			<rule if-outcome="uf">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/tabelas/UfList.xhtml"/>
+			</rule>
+
+			<rule if-outcome="municipio">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/tabelas/MunicipioList.xhtml"/>
+			</rule>
+
+			<rule if-outcome="usuario">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/tabelas/UserList.xhtml"/>
+			</rule>
+
+			<rule if-outcome="equipe">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/tabelas/EquipeList.xhtml"/>
+			</rule>
+
+			<rule if-outcome="subsistema">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/tabelas/SubsistemaList.xhtml"/>
+			</rule>
+
+			<rule if-outcome="pontoControle">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/tabelas/PontoControleList.xhtml"/>
+			</rule>
+
+			<rule if-outcome="tipoObjeto">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/tabelas/TipoObjetoList.xhtml"/>
+			</rule>
+
+			<rule if-outcome="questaoAuditoria">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/tabelas/QuestaoAuditoriaList.xhtml"/>
+			</rule>
+
+			<rule if-outcome="achado">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/tabelas/AchadoList.xhtml"/>
+			</rule>
+
+			<rule if-outcome="introducaoConsideracaoFinal">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/tabelas/IntroducaoConsideracaoFinalList.xhtml"/>
+			</rule>
+			
+			<rule if-outcome="objeto">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/tabelas/ObjetoList.xhtml"/>
+			</rule>
+
+			<!-- Planejamento -->
+
+			<rule if-outcome="ordemServico">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/planejamento/OrdemServicoList.xhtml"/>
+			</rule>
+			
+			
+
+			<!-- Execução -->
+
+			<!-- Relatórios -->
+
+			<!-- Configurações -->
+			
+			<rule if-outcome="parametrosSistema">
+				<end-conversation before-redirect="true"/>
+				<redirect view-id="/configuracoes/ParametrosSistemaList.xhtml"/>
+			</rule>
+			
+
+		</navigation>
+
+	</page>
+
+	<!-- Controle de Autenticação -->
+	<page view-id="/tabelas/*" login-required="true" />
+	<page view-id="/planejamento/*" login-required="true" />
+	<page view-id="/execucao/*" login-required="true" />
+	<page view-id="/resultado/*" login-required="true" />
+	<page view-id="/relatorios/*" login-required="true" />
+
+
+	<!-- Manipulação de Excessões -->
+	<exception
+		class="br.gov.mt.cepromat.seam.core.exception.ChangePasswordException">
+		<redirect view-id="/AlterarSenha.xhtml">
+			<message severity="warn">O usuário deve alterar sua senha pessoal no primeiro acesso.</message>
+		</redirect>
+	</exception>
+
+
+
+
+	<exception class="org.jboss.seam.framework.EntityNotFoundException">
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">Registro não encontrado.</message>
+		</redirect>
+	</exception>
+
+	<exception class="javax.persistence.EntityNotFoundException">
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">Registro não encontrado.</message>
+		</redirect>
+	</exception>
+
+	<exception class="javax.persistence.EntityExistsException">
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">Registro duplicado.</message>
+		</redirect>
+	</exception>
+
+	<exception class="javax.persistence.OptimisticLockException">
+		<end-conversation />
+		<redirect view-id="/error.xhtml">
+			<message severity="warn">Another user changed the same data, please try again</message>
+		</redirect>
+	</exception>
+
+	<exception class="org.jboss.seam.security.AuthorizationException">
+		<redirect view-id="/home.xhtml">
+			<message severity="error">Você não tem permissão para acessar este recurso.</message>
+		</redirect>
+	</exception>
+
+	<exception class="org.jboss.seam.security.NotLoggedInException">
+		<redirect view-id="/login.xhtml">
+			<message severity="warn">#{messages['org.jboss.seam.NotLoggedIn']}</message>
+		</redirect>
+	</exception>
+
+	<exception class="javax.faces.application.ViewExpiredException">
+		<redirect view-id="/home.xhtml">
+			<message severity="warn">Sua sessão expirou, por favor, tente novamente.</message>
+		</redirect>
+	</exception>
+
+	<exception class="org.jboss.seam.ConcurrentRequestTimeoutException"
+		log-level="trace">
+		<http-error error-code="503" />
+	</exception>
+
+	<exception class="org.jboss.seam.web.FileUploadException">
+		<redirect view-id="/error.xhtml">
+			<message>#{org.jboss.seam.handledException.message}</message>
+		</redirect>
+	</exception>
+
+	<exception>
+		<redirect view-id="/error.xhtml">
+			<message severity="error">Unexpected error, please try again</message>
+		</redirect>
+	</exception>
+
+</pages>
