@@ -8,32 +8,27 @@
 	<url>http://www.sofistcarros.com.br</url>
 
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.jboss.seam</groupId>
-				<artifactId>bom</artifactId>
-				<version>2.3.0.CR1-SNAPSHOT</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
+	<!-- <dependencyManagement> <dependencies> <dependency> <groupId>org.jboss.seam</groupId> 
+		<artifactId>bom</artifactId> <version>2.3.0.CR1-SNAPSHOT</version> <type>pom</type> 
+		<scope>import</scope> </dependency> </dependencies> </dependencyManagement> -->
 	<dependencies>
+
+		<!-- <dependency> <groupId>org.jboss.seam</groupId> <artifactId>bom</artifactId> 
+			<version>2.3.0.CR1-SNAPSHOT</version> <type>pom</type> <scope>import</scope> 
+			</dependency> -->
 
 		<dependency>
 			<groupId>org.jboss.seam</groupId>
 			<artifactId>jboss-seam</artifactId>
 			<version>2.3.0.CR1-SNAPSHOT</version>
-			<type>ejb</type>
+			<!-- <type>ejb</type> -->
 		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.seam</groupId>
 			<artifactId>jboss-seam-ui</artifactId>
 			<version>2.3.0.CR1-SNAPSHOT</version>
-			<type>ejb</type>
+			<!-- <type>ejb</type> -->
 		</dependency>
 
 		<dependency>
@@ -94,7 +89,11 @@
 			<version>4.1.5.SP1</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1-jboss</version>
+		</dependency>
 
 	</dependencies>
 
